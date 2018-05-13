@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.srm.service.EmprestimoService;
 
 import javassist.NotFoundException;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("emprestimo")
 public class EmprestimoController {
@@ -30,7 +32,7 @@ public class EmprestimoController {
 	private final EmprestimoRestRepository emprestimoRestRepository;
 	
 	private final EmprestimoService emprestimoService;
-	
+
 	@Autowired
 	public EmprestimoController(EmprestimoRepository emprestimoRepository, EmprestimoRestRepository emprestimoRestRepository,
 			 EmprestimoService emprestimoService) {
@@ -38,7 +40,11 @@ public class EmprestimoController {
 		this.emprestimoRestRepository = emprestimoRestRepository;
 		this.emprestimoService = emprestimoService;
 	}
-
+	
+	@GetMapping()
+	public Collection<Emprestimo> getAllEmprestimo() throws NotFoundException{
+		return this.emprestimoRepository.findAll();
+	}
 	
 	@GetMapping("/{id}")
 	public Emprestimo getEmprestimoById(@PathVariable Long id) throws NotFoundException{
@@ -71,6 +77,12 @@ public class EmprestimoController {
 	public ResponseEntity<?> remove(@PathVariable Long id){
 		emprestimoService.deleteEmprestimo(id);
 		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/simular")
+	public ResponseEntity<?> validade(@RequestBody Emprestimo emprestimo){
+		Emprestimo newEmprestimo = emprestimoService.calcularJuros(emprestimo);
+		return ResponseEntity.status(HttpStatus.OK).body(newEmprestimo);
 	}
 	
 }

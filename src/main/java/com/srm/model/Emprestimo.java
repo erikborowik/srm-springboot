@@ -19,9 +19,13 @@ public class Emprestimo {
 	private String nome;
 
 	private Double limiteCredito;
+	
+	private Double valorPagamento;
 
 	@Enumerated(EnumType.ORDINAL)
 	private RiscoEnum risco;
+	
+	private Double taxaJuros;
 	
 	public Emprestimo() {
 		super();
@@ -62,6 +66,22 @@ public class Emprestimo {
 
 	public void setRisco(RiscoEnum risco) {
 		this.risco = risco;
+	}
+
+	public Double getTaxaJuros() {
+		return taxaJuros;
+	}
+
+	public void setTaxaJuros(Double taxaJuros) {
+		this.taxaJuros = taxaJuros;
+	}
+
+	public Double getValorPagamento() {
+		return valorPagamento;
+	}
+
+	public void setValorPagamento(Double valorPagamento) {
+		this.valorPagamento = valorPagamento;
 	}
 	
 
