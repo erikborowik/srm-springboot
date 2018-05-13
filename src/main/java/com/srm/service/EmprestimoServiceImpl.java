@@ -90,5 +90,13 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 
 		return emprestimo;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.srm.service.EmprestimoService#deleteEmprestimo(java.lang.String)
+	 */
+	@Override
+	public Emprestimo findByNome(String nome) {
+		return this.emprestimoRepository.findByNome(nome);
+	}
 
 }

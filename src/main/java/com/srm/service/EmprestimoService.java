@@ -13,5 +13,7 @@ public interface EmprestimoService {
 	void deleteEmprestimo(Long id);
 
 	Emprestimo calcularJuros(Emprestimo emprestimo);
+	
+	Emprestimo findByNome(String nome);
 
 }
